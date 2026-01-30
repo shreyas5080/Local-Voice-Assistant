@@ -2,19 +2,20 @@ import pyttsx3
 import os
 from src.ear import listen_and_transcribe
 from src.brain import ask_brain
-
-engine = pyttsx3.init()
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
-engine.setProperty('rate', 175)
-
-
 def speak(text):
+    if not text:
+        return
+
     print(f"🤖 AI: {text}")
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[1].id)
+    engine.setProperty('rate', 175)
+
     engine.say(text)
     engine.runAndWait()
-
-
+    # Stop the engine properly to free up the audio device
+    engine.stop()
 def main():
     speak("System online. Hello Shreyas, I am listening.")
 
